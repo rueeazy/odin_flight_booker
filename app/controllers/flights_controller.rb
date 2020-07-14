@@ -1,10 +1,11 @@
 class FlightsController < ApplicationController
-  before_action :set_flight, only: [:show, :edit, :update, :destroy]
 
   # GET /flights
   # GET /flights.json
   def index
-    @flights = Flight.all
+    # @airport_options = Airport.all.map{|i| [i.airport_code, i.id] }
+    # @date_options = Flight.all.map{|n| [n.departure_time] }
+    @flights = Flight.where(start_airport_id: params[:start_airport], end_airport_id: params[:end_airport], departure_time: params[:departure_time])
   end
 
   # GET /flights/1
@@ -68,7 +69,4 @@ class FlightsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def flight_params
-      params.fetch(:flight, {})
-    end
 end

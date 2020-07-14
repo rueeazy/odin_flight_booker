@@ -1,25 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Flights</h1>
+<h1>Find a Flight</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <%= form_with url: flights_path, method: :get, local: true do %>
+        <%= label_tag :start_airport, 'From' %>
+        <%= select_tag(:start_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
+        <%= label_tag :end_airport, 'To' %>
+        <%= select_tag(:end_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
+        <%= label_tag 'Passengers' %>
+        <%= select_tag('num_tickets', options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
+        <%= label_tag :departure_time, 'Date' %>
+        <%= select_tag(:departure_time, options_from_collection_for_select(Flight.all, :departure_time, :flight_date_formatted)) %>
+        <br><br>
+        <%= submit_tag 'Search Flights' %>
+      <% end %>
+      <br />
 
-  <tbody>
-    <% @flights.each do |flight| %>
-      <tr>
-        <td><%= link_to 'Show', flight %></td>
-        <td><%= link_to 'Edit', edit_flight_path(flight) %></td>
-        <td><%= link_to 'Destroy', flight, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+        <% if @flights.present? %>
+          <% @flights.each do |flight| %>
+            <div style="border:3px; border-style:solid; border-color:#000000; padding: 1em;">
+            <%= flight.start_airport.airport_code %>
+            <%= flight.end_airport.airport_code %>
+            <%= flight.flight_date_formatted %>
+            </div>
+          <% end %>
+        <% end %>
 <br>
 
-<%= link_to 'New Flight', new_flight_path %>
+<%= link_to 'Select Flight', new_flight_path %>
+
