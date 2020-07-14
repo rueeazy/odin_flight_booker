@@ -7,8 +7,8 @@
         <%= select_tag(:start_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
         <%= label_tag :end_airport, 'To' %>
         <%= select_tag(:end_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
-        <%= label_tag 'Passengers' %>
-        <%= select_tag('num_tickets', options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
+        <%= label_tag :passengers, 'Passengers' %>
+        <%= select_tag(:passengers, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
         <%= label_tag :departure_time, 'Date' %>
         <%= select_tag(:departure_time, options_from_collection_for_select(Flight.all, :departure_time, :flight_date_formatted)) %>
         <br><br>
@@ -16,16 +16,19 @@
       <% end %>
       <br />
 
+      <%= form_with url: new_booking_path, method: :get, local: true do %>
         <% if @flights.present? %>
           <% @flights.each do |flight| %>
-            <div style="border:3px; border-style:solid; border-color:#000000; padding: 1em;">
+            <div style="border:1px; border-style:solid; border-color:#000000; padding: 1em;">
+            <%= radio_button_tag :flight_id, flight.id %>
             <%= flight.start_airport.airport_code %>
             <%= flight.end_airport.airport_code %>
             <%= flight.flight_date_formatted %>
+            <%= "Duration: #{flight.flight_duration} hours" %>
             </div>
+            <%= hidden_field_tag :passengers, params[:passengers] %><br>
+            <%= submit_tag "Next" %>
           <% end %>
         <% end %>
-<br>
-
-<%= link_to 'Select Flight', new_flight_path %>
+      <% end %>
 
