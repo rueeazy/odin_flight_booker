@@ -1,1 +1,31 @@
-"Hello"
+<h1>Book Your Flight</h1>
+
+<% if @booking.errors.any? %>
+  <% flash[:danger].each do |message| %><br>
+    <%= message %>
+  <% end %>
+<% end %><br>
+
+<h3>Departure Date: <%= @flight.flight_date_formatted %><br>
+Flight Number: <%= @flight.id %><br>
+Departing: <%= @flight.start_airport.airport_code %><br>
+Arriving: <%= @flight.end_airport.airport_code %></h3>
+
+Enter Passenger Information:
+<br><br>
+
+<%= form_with model: @booking, local: true do |form| %>
+    <%= form.hidden_field :flight_id, :value => @flight.id %>
+
+    <%= form.fields_for :passengers do |passenger_form| %>
+            <%= passenger_form.label :name %>
+            <%= passenger_form.text_field :name %>
+            <%= passenger_form.label :email %>
+            <%= passenger_form.text_field :email %><br><br>
+            <%= passenger_form.hidden_field :flight_id, :value => @flight.id %>
+    <% end %>
+    
+<%= form.submit "Book Flight" %>
+
+<% end %>
+

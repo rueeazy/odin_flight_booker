@@ -1,0 +1,15 @@
+<h1>Thank you for booking with us! Here are your flight details.</h1>
+
+
+Flight Number: <%= @booking.flight.id %><br>
+Departure Airport: <%= @booking.flight.start_airport.airport_code %><br>
+Arrival Airport: <%= @booking.flight.end_airport.airport_code %><br>
+Date: <%= @booking.flight.flight_date_formatted %><br><br>
+
+Passengers: <%= @booking.passengers.count %>
+<% @booking.passengers.each do |passenger| %>
+    <ul>Name: <%= passenger.name %></ul>
+    <ul>Email: <%= passenger.email %></ul><br>
+<% end %>
+
+

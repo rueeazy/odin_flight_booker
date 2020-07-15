@@ -7,8 +7,8 @@
         <%= select_tag(:start_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
         <%= label_tag :end_airport, 'To' %>
         <%= select_tag(:end_airport, options_from_collection_for_select(Airport.all, :id, :airport_code)) %>
-        <%= label_tag :passengers, 'Passengers' %>
-        <%= select_tag(:passengers, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
+        <%= label_tag :num_tickets, 'Passengers' %>
+        <%= select_tag(:num_tickets, options_for_select([['1', 1], ['2', 2], ['3', 3], ['4', 4]])) %>
         <%= label_tag :departure_time, 'Date' %>
         <%= select_tag(:departure_time, options_from_collection_for_select(Flight.all, :departure_time, :flight_date_formatted)) %>
         <br><br>
@@ -26,7 +26,7 @@
             <%= flight.flight_date_formatted %>
             <%= "Duration: #{flight.flight_duration} hours" %>
             </div>
-            <%= hidden_field_tag :passengers, params[:passengers] %><br>
+            <%= hidden_field_tag :num_tickets, params[:num_tickets] %><br>
             <%= submit_tag "Next" %>
           <% end %>
         <% end %>
