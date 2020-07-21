@@ -14,6 +14,8 @@ class BookingsController < ApplicationController
         @booking = Booking.new(booking_params)
 
         if @booking.save
+            @booking_passengers = Passenger.where(booking_id: @booking.id)
+            PassengerMailer.confirmation_email(@booking_passengers).deliver_now
             redirect_to booking_path(@booking)
         else
             flash[:danger] = @booking.errors.full_messages
